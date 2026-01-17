@@ -1,29 +1,23 @@
-import {FastifyInstance} from "fastify";
+import { FastifyInstance } from "fastify";
 import db from "../../../db/index.ts";
+import notFound from "../../../utils/notFound.ts";
 
 export default async function (app: FastifyInstance) {
   app.patch<{
     Body: Partial<{
       title: string;
       content: string;
-    }>,
+    }>;
     Params: {
       postId: string;
-    }
-  }>('/:postId', async (request, reply) => {
+    };
+  }>("/:postId", async (request, reply) => {
     const postId = parseInt(request.params.postId, 10);
     const post = db.posts.find((p) => p.id === postId);
     if (!post) {
-      reply.status(404);
-      return {
-        statusCode: 404,
-        error: 'Not Found',
-        message: `Post with id ${postId} not found`,
-      };
+      return notFound(`Post with id ${postId} not found`, reply);
     }
 
-
-    const {title, content} = request.body;
     const updatedPost = {
       ...post,
       ...request.body,
@@ -38,3 +32,4 @@ export default async function (app: FastifyInstance) {
     return updatedPost;
   });
 }
+

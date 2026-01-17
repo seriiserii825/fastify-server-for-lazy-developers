@@ -1,5 +1,6 @@
 import { FastifyInstance } from "fastify";
 import db from "../../../db/index.ts";
+import notFound from "../../../utils/notFound.ts";
 
 export default async function (app: FastifyInstance) {
   app.get<{
@@ -10,15 +11,12 @@ export default async function (app: FastifyInstance) {
     const postId = parseInt(request.params.postId, 10);
     const post = db.posts.find((post) => post.id === postId);
     if (!post) {
-      return reply.status(404).send({
-        error: `Post with ${postId} not found`,
-      });
+      return notFound("Post with ${postId} not found", reply);
     }
     return post;
   });
 
-  app.get("/", async (request, reply) => {
+  app.get("/", async () => {
     return db.posts;
   });
 }
-
