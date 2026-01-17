@@ -17,7 +17,7 @@ const route: FastifyPluginAsyncTypebox = async (app) => {
       const { postId } = request.params;
       const post = db.posts.find((p) => p.id === postId);
       if (!post) {
-        return reply.notFound(`Post with id ${postId} not found`);
+        return reply.notFound(`Post with ${postId} not found`);
       }
       db.posts = db.posts.filter((p) => p.id !== postId);
       return post;
