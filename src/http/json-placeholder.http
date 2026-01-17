@@ -1,8 +1,20 @@
 # @env dev
 
-### Get home
-GET {{apiUrl}}/v1/hello
+### Get all posts
+GET {{apiUrl}}/v1/posts
 
 ### Get post by id
-GET {{apiUrl}}/v1/posts/2
+GET {{apiUrl}}/v1/posts
 
+### Create a new post
+POST {{apiUrl}}/v1/posts
+Content-Type: application/json
+
+{
+  "title": "Post One",
+  "body": "This is post one body"
+}
+
+
+### Delete a post by id
+DELETE {{apiUrl}}/v1/posts/2
