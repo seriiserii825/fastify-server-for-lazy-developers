@@ -1,35 +1,39 @@
-import { FastifyInstance } from "fastify";
 import db from "../../../db/index.ts";
-import notFound from "../../../utils/notFound.ts";
+import { FastifyPluginAsyncTypebox } from "@fastify/type-provider-typebox";
+import { PostSchemas } from "../../../schemas/index.ts";
 
-export default async function (app: FastifyInstance) {
-  app.patch<{
-    Body: Partial<{
-      title: string;
-      content: string;
-    }>;
-    Params: {
-      postId: string;
-    };
-  }>("/:postId", async (request, reply) => {
-    const postId = parseInt(request.params.postId, 10);
-    const post = db.posts.find((p) => p.id === postId);
-    if (!post) {
-      return notFound(`Post with id ${postId} not found`, reply);
-    }
-
-    const updatedPost = {
-      ...post,
-      ...request.body,
-      id: post.id,
-    };
-    db.posts = db.posts.map((p) => {
-      if (p.id === postId) {
-        return updatedPost;
+const route: FastifyPluginAsyncTypebox = async (app) => {
+  app.patch(
+    "/:postId",
+    {
+      schema: {
+        body: PostSchemas.Bodies.UpdatePost,
+        params: PostSchemas.Params.PostId,
+        response: {
+          200: PostSchemas.Bodies.Post,
+        },
+      },
+    },
+    async (request, reply) => {
+      const { postId } = request.params;
+      const post = db.posts.find((p) => p.id === postId);
+      if (!post) {
+        return reply.notFound(`Post with id ${postId} not found`);
       }
-      return p;
-    });
-    return updatedPost;
-  });
-}
 
+      const updatedPost = {
+        ...post,
+        ...request.body,
+        id: post.id,
+      };
+      db.posts = db.posts.map((p) => {
+        if (p.id === postId) {
+          return updatedPost;
+        }
+        return p;
+      });
+      return updatedPost;
+    }
+  );
+};
+export default route;

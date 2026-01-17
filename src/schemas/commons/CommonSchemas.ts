@@ -5,4 +5,3 @@ export const CommonSchemas = {
   Queries,
   Pagination,
 };
-

@@ -1,5 +1,6 @@
 import fastify from "fastify";
 import buildServer from "./server.ts";
+import sensible from "@fastify/sensible";
 
 async function run() {
   const app = fastify({
@@ -10,6 +11,8 @@ async function run() {
     },
   });
   app.register(buildServer);
+  // Регистрируем sensible
+  app.register(sensible);
 
   try {
     await app.listen({
