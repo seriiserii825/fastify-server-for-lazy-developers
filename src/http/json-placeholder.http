@@ -1,0 +1,8 @@
+# @env dev
+
+### Get home
+GET {{apiUrl}}/v1/hello
+
+### Get post by id
+GET {{apiUrl}}/v1/posts/2
+

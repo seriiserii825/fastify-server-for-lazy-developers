@@ -5,11 +5,11 @@ async function run() {
   const app = fastify({
     logger: {
       transport: {
-        target: 'pino-pretty'
+        target: "pino-pretty",
       },
     },
   });
-  app.register(buildServer)
+  app.register(buildServer);
 
   try {
     await app.listen({
