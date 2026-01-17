@@ -12,7 +12,7 @@ Content-Type: application/json
 
 {
   "title": "Post One",
-  "body": "This is post one body"
+  "content": "This is post one body"
 }
 
 
