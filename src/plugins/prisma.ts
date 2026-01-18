@@ -1,16 +1,19 @@
 import { PrismaClient } from "@prisma/client";
 import fp from "fastify-plugin";
+import { FastifyPluginAsync } from "fastify";
 
-async function prismaPlugin(fastify, options) {
-  const prisma = new PrismaClient();
+const prismaPlugin: FastifyPluginAsync = async (fastify, options) => {
+  const prisma = new PrismaClient({
+    log: ["query", "error", "warn"],
+  });
 
-  // Добавляем Prisma в декоратор Fastify
+  await prisma.$connect();
+
   fastify.decorate("prisma", prisma);
 
-  // Закрываем соединение при остановке сервера
   fastify.addHook("onClose", async (fastify) => {
     await fastify.prisma.$disconnect();
   });
-}
+};
 
 export default fp(prismaPlugin);
