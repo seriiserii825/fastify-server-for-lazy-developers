@@ -89,12 +89,13 @@ const route: FastifyPluginAsyncTypebox = async (app) => {
     },
     async (request, reply) => {
       const { title, content } = request.body;
-      const post = {
-        id: db.posts.length + 1,
-        title,
-        content,
-      };
-      db.posts.push(post);
+
+      const post = await app.prisma.post.create({
+        data: {
+          title,
+          content,
+        },
+      });
 
       reply.status(201);
       return post;
