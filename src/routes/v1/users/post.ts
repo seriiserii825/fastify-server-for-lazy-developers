@@ -5,6 +5,7 @@ const route: FastifyPluginCallbackTypebox = (app, _, done) => {
   app.post(
     "/",
     {
+      onRequest: [app.authenticate],
       schema: {
         body: UserSchemas.Bodies.CreateUser,
         response: {

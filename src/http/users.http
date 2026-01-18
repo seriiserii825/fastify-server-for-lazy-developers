@@ -2,7 +2,9 @@
 
 ### Get all users
 GET {{apiUrl}}/v1/users
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiZW1haWwiOiJzZXJpaWJ1cmR1amFAZ21haWwuY29tIiwiaWF0IjoxNzY4NzY1Mzc1LCJleHAiOjE3Njg3NjYyNzV9.K4KV4R88NWwW-0hrh4T102xlTAp6OqPLuK3uEEkr5ps
+Authorization: Bearer {{token}}
+Accept: application/json
+
 
 ### Get post by id
 GET {{apiUrl}}/v1/users/1

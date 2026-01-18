@@ -5,6 +5,7 @@ const route: FastifyPluginCallbackTypebox = (app, _, done) => {
   app.get(
     "/",
     {
+      onRequest: [app.authenticate],
       schema: {
         params: UserSchemas.Params.UserId,
         response: {
@@ -31,6 +32,7 @@ const route: FastifyPluginCallbackTypebox = (app, _, done) => {
   app.delete(
     "/",
     {
+      onRequest: [app.authenticate],
       schema: {
         params: UserSchemas.Params.UserId,
         response: {
@@ -60,6 +62,7 @@ const route: FastifyPluginCallbackTypebox = (app, _, done) => {
   app.patch(
     "/",
     {
+      onRequest: [app.authenticate],
       schema: {
         body: UserSchemas.Bodies.UpdateUser,
         params: UserSchemas.Params.UserId,
