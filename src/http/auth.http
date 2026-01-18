@@ -24,3 +24,10 @@ POST {{apiUrl}}/v1/auth/refresh
 Content-Type: application/json
 
 {}
+
+
+### Logout user
+POST {{apiUrl}}/v1/auth/logout
+Content-Type: application/json
+
+{}
