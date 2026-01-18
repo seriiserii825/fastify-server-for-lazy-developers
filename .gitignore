@@ -138,3 +138,5 @@ api-docs/
 
 # Sentry
 .sentryclirc
+
+/src/generated/prisma
