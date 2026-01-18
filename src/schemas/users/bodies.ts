@@ -27,3 +27,7 @@ export const LoginResponse = Type.Object({
   accessToken: Type.String(),
   user: User,
 });
+
+export const RefreshResponse = Type.Object({
+  accessToken: Type.String(),
+});

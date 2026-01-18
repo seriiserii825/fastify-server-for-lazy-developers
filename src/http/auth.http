@@ -19,3 +19,8 @@ Content-Type: application/json
   "password": "nixon1981"
 }
 
+### Refresh token
+POST {{apiUrl}}/v1/auth/refresh
+Content-Type: application/json
+
+{}

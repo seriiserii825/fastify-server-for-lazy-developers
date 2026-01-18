@@ -33,7 +33,7 @@ const route: FastifyPluginCallbackTypebox = (app, _, done) => {
       // Удаляем старые refresh токены этого пользователя (опционально)
       await app.prisma.refreshToken.deleteMany({
         where: {
-          userId: String(user.id),
+          userId: user.id,
         },
       });
 
@@ -51,7 +51,7 @@ const route: FastifyPluginCallbackTypebox = (app, _, done) => {
       await app.prisma.refreshToken.create({
         data: {
           token: refreshToken,
-          userId: String(user.id),
+          userId: user.id,
           expiresAt,
         },
       });
