@@ -6,16 +6,6 @@ GET {{apiUrl}}/v1/users
 ### Get post by id
 GET {{apiUrl}}/v1/users/1
 
-### Create a new user
-POST {{apiUrl}}/v1/users
-Content-Type: application/json
-
-{
-  "name": "Nixon",
-  "email": "nixon@gmail.com",
-  "password": "nixon1981"
-}
-
 ### Update a new user
 PATCH {{apiUrl}}/v1/users/1
 Content-Type: application/json

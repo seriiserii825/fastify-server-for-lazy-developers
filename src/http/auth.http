@@ -1,0 +1,21 @@
+# @env dev
+
+### Register user
+POST {{apiUrl}}/v1/auth/register
+Content-Type: application/json
+
+{
+  "name": "Nixon",
+  "email": "nixon@gmail.com",
+  "password": "nixon1981"
+}
+
+### Login user
+POST {{apiUrl}}/v1/auth/login
+Content-Type: application/json
+
+{
+  "email": "nixon@gmail.com",
+  "password": "nixon1981"
+}
+

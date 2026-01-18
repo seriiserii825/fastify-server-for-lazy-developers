@@ -20,3 +20,10 @@ export const User = Type.Intersect([
 
 export const UsersPaginated = CommonSchemas.Pagination.PaginationResult(User);
 export const UsersList = Type.Array(User);
+
+export const LoginBody = Type.Pick(CreateUser, ["email", "password"]);
+
+export const LoginResponse = Type.Object({
+  accessToken: Type.String(),
+  user: User,
+});
