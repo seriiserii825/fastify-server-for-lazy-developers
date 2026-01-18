@@ -23,7 +23,7 @@ async function run() {
 
   try {
     await app.listen({
-      port: 3000,
+      port: 3300,
       host: "0.0.0.0",
     });
   } catch (err) {
