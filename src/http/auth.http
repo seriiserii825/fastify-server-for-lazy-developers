@@ -6,8 +6,8 @@ Content-Type: application/json
 
 {
   "name": "Nixon",
-  "email": "nixon@gmail.com",
-  "password": "nixon1981"
+  "email": "seriiburduja@gmail.com",
+  "password": "123456"
 }
 
 ### Login user
@@ -15,8 +15,8 @@ POST {{apiUrl}}/v1/auth/login
 Content-Type: application/json
 
 {
-  "email": "nixon@gmail.com",
-  "password": "nixon1981"
+  "email": "seriiburduja@gmail.com",
+  "password": "123456"
 }
 
 ###
