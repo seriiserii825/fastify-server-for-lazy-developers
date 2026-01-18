@@ -5,26 +5,6 @@ import { PostSchemas } from "../../../schemas/index.ts";
 
 const route: FastifyPluginAsyncTypebox = async (app) => {
   app.get(
-    "/:postId",
-    {
-      schema: {
-        params: PostSchemas.Params.PostId,
-        response: {
-          200: PostSchemas.Bodies.Post,
-        },
-      },
-    },
-    async (request) => {
-      const { postId } = request.params;
-      const post = db.posts.find((post) => post.id === postId);
-      if (!post) {
-        throw app.httpErrors.notFound(`Post with ${postId} not found`);
-      }
-      return post;
-    }
-  );
-
-  app.get(
     "/",
     {
       schema: {
