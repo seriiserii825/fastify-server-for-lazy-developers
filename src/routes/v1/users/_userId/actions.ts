@@ -1,7 +1,7 @@
-import { FastifyPluginAsyncTypebox } from "@fastify/type-provider-typebox";
+import { FastifyPluginCallbackTypebox } from "@fastify/type-provider-typebox";
 import { UserSchemas } from "../../../../schemas/index.ts";
 
-const route: FastifyPluginAsyncTypebox = async (app) => {
+const route: FastifyPluginCallbackTypebox = (app, _, done) => {
   app.get(
     "/",
     {
@@ -91,5 +91,6 @@ const route: FastifyPluginAsyncTypebox = async (app) => {
       };
     }
   );
+  done();
 };
 export default route;

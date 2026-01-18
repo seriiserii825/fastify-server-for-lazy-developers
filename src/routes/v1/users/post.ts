@@ -1,7 +1,7 @@
-import { FastifyPluginAsyncTypebox } from "@fastify/type-provider-typebox";
+import { FastifyPluginCallbackTypebox } from "@fastify/type-provider-typebox";
 import { UserSchemas } from "../../../schemas/index.ts";
 
-const route: FastifyPluginAsyncTypebox = async (app) => {
+const route: FastifyPluginCallbackTypebox = (app, _, done) => {
   app.post(
     "/",
     {
@@ -20,7 +20,9 @@ const route: FastifyPluginAsyncTypebox = async (app) => {
       });
 
       if (old_user) {
-        throw app.httpErrors.conflict(`User with email ${email} already exists`);
+        throw app.httpErrors.conflict(
+          `User with email ${email} already exists`
+        );
       }
 
       const user = await app.prisma.user.create({
@@ -39,5 +41,6 @@ const route: FastifyPluginAsyncTypebox = async (app) => {
       };
     }
   );
+  done();
 };
 export default route;
