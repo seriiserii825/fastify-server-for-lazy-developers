@@ -13,20 +13,15 @@
     "prisma:migrate:deploy": "prisma migrate deploy",
     "prisma:studio": "prisma studio"
   },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/Puppo/fastify-server-for-lazy-developers.git"
-  },
   "keywords": [
     "fastify",
     "node"
   ],
-  "author": "Luca Del Puppo",
+  "author": "Serii Burduja",
   "license": "ISC",
   "bugs": {
     "url": "https://github.com/Puppo/fastify-server-for-lazy-developers/issues"
   },
-  "homepage": "https://github.com/Puppo/fastify-server-for-lazy-developers#readme",
   "dependencies": {
     "@fastify/autoload": "^5.8.0",
     "@fastify/cookie": "^11.0.2",
