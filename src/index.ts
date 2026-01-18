@@ -1,6 +1,9 @@
 import fastify from "fastify";
 import buildServer from "./server.ts";
 import sensible from "@fastify/sensible";
+import fastifySwagger from "@fastify/swagger";
+import fastifySwaggerUI from "@fastify/swagger-ui";
+import { swaggerOptions, swaggerUIOptions } from "./swagger.ts";
 
 async function run() {
   const app = fastify({
@@ -10,6 +13,10 @@ async function run() {
       },
     },
   });
+
+  await app.register(fastifySwagger, swaggerOptions);
+  await app.register(fastifySwaggerUI, swaggerUIOptions);
+
   app.register(buildServer);
   // Регистрируем sensible
   app.register(sensible);
