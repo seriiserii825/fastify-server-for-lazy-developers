@@ -35,3 +35,12 @@ export const RefreshResponse = Type.Object({
 export const LogoutResponse = Type.Object({
   message: Type.String(),
 });
+
+export const FavoriteResponse = Type.Object({
+  message: Type.Union([
+    Type.Literal("Removed from favorites"),
+    Type.Literal("Added to favorites"),
+  ]),
+  isFavorite: Type.Boolean(),
+  productId: Type.Number(),
+});
