@@ -12,6 +12,8 @@ export const UpdateUser = Type.Partial(CreateUser);
 export const User = Type.Intersect([
   Type.Object({
     id: Type.Number(),
+    name: Type.Optional(Type.String({ minLength: 2 })),
+    picture: Type.Optional(Type.String({ format: "uri" })),
     createdAt: Type.String({ format: "date-time" }), // Исправлено
     updatedAt: Type.String({ format: "date-time" }), // Исправлено
   }),
