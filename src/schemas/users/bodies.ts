@@ -9,16 +9,14 @@ export const CreateUser = Type.Object({
 
 export const UpdateUser = Type.Partial(CreateUser);
 
-export const User = Type.Intersect([
-  Type.Object({
-    id: Type.Number(),
-    name: Type.Optional(Type.String({ minLength: 2 })),
-    picture: Type.Optional(Type.String({ format: "uri" })),
-    createdAt: Type.String({ format: "date-time" }), // Исправлено
-    updatedAt: Type.String({ format: "date-time" }), // Исправлено
-  }),
-  Type.Omit(CreateUser, ["password"]),
-]);
+export const User = Type.Object({
+  id: Type.Number(),
+  email: Type.String({ format: "email" }),
+  name: Type.Union([Type.String({ minLength: 2 }), Type.Null()]),
+  picture: Type.Union([Type.String(), Type.Null()]),
+  createdAt: Type.String({ format: "date-time" }),
+  updatedAt: Type.String({ format: "date-time" }),
+});
 
 export const UsersPaginated = CommonSchemas.Pagination.PaginationResult(User);
 export const UsersList = Type.Array(User);

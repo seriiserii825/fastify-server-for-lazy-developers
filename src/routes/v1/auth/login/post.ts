@@ -71,6 +71,7 @@ const route: FastifyPluginCallbackTypebox = (app, _, done) => {
           id: user.id,
           email: user.email,
           name: user.name,
+          picture: user.picture,
           createdAt: user.createdAt.toISOString(),
           updatedAt: user.updatedAt.toISOString(),
         },

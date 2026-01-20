@@ -21,6 +21,7 @@ const route: FastifyPluginCallbackTypebox = (app, _, done) => {
           id: true,
           email: true,
           name: true,
+          picture: true,
           createdAt: true,
           updatedAt: true,
         },

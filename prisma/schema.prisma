@@ -7,25 +7,19 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-enum OrderStatus {
-  PENDING
-  PAYED
-}
-
 model User {
-  id        Int      @id @default(autoincrement())
-  createdAt DateTime @default(now()) @map("created_at")
-  updatedAt DateTime @updatedAt @map("updated_at")
-  email     String   @unique
-  password  String?
-  name      String?
-  picture   String   @default("/uploads/no-user-image.png")
-
+  id            Int            @id @default(autoincrement())
+  createdAt     DateTime       @default(now()) @map("created_at")
+  updatedAt     DateTime       @updatedAt @map("updated_at")
+  email         String         @unique
+  password      String
+  name          String?
+  picture       String?        @default("/uploads/no-user-image.png")
   refreshTokens RefreshToken[]
-  stores        Store[]
-  reviews       Review[]
-  orders        Order[]
   orderItems    OrderItem[]
+  orders        Order[]
+  reviews       Review[]
+  stores        Store[]
   favorites     Product[]      @relation("UserFavorites")
 
   @@map("users")
@@ -34,113 +28,111 @@ model User {
 model RefreshToken {
   id        Int      @id @default(autoincrement())
   token     String   @unique
-  userId    Int
-  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
   expiresAt DateTime
   createdAt DateTime @default(now())
+  userId    Int
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
 
   @@index([userId])
 }
 
 model Store {
-  id          Int      @id @default(autoincrement())
-  createdAt   DateTime @default(now()) @map("created_at")
-  updatedAt   DateTime @updatedAt @map("updated_at")
+  id          Int         @id @default(autoincrement())
+  createdAt   DateTime    @default(now()) @map("created_at")
+  updatedAt   DateTime    @updatedAt @map("updated_at")
   title       String
   description String?
-  userId      Int      @map("user_id")
-
-  user       User        @relation(fields: [userId], references: [id])
-  products   Product[]
-  categories Category[]
-  colors     Color[]
-  reviews    Review[]
-  orderItems OrderItem[]
+  userId      Int         @map("user_id")
+  categories  Category[]
+  colors      Color[]
+  orderItems  OrderItem[]
+  products    Product[]
+  reviews     Review[]
+  user        User        @relation(fields: [userId], references: [id])
 
   @@unique([title, userId])
   @@map("stores")
 }
 
 model Category {
-  id          Int      @id @default(autoincrement())
-  createdAt   DateTime @default(now()) @map("created_at")
-  updatedAt   DateTime @updatedAt @map("updated_at")
+  id          Int       @id @default(autoincrement())
+  createdAt   DateTime  @default(now()) @map("created_at")
+  updatedAt   DateTime  @updatedAt @map("updated_at")
   title       String
   description String
-  storeId     Int?     @map("store_id")
-
-  store    Store?    @relation(fields: [storeId], references: [id])
-  products Product[]
+  storeId     Int?      @map("store_id")
+  store       Store?    @relation(fields: [storeId], references: [id])
+  products    Product[]
 
   @@map("categories")
 }
 
 model Color {
-  id        Int      @id @default(autoincrement())
-  createdAt DateTime @default(now()) @map("created_at")
-  updatedAt DateTime @updatedAt @map("updated_at")
+  id        Int       @id @default(autoincrement())
+  createdAt DateTime  @default(now()) @map("created_at")
+  updatedAt DateTime  @updatedAt @map("updated_at")
   name      String
   value     String
-  storeId   Int?     @map("store_id")
-
-  store    Store?    @relation(fields: [storeId], references: [id])
-  products Product[]
+  storeId   Int?      @map("store_id")
+  store     Store?    @relation(fields: [storeId], references: [id])
+  products  Product[]
 
   @@unique([name, storeId])
   @@map("colors")
 }
 
 model Product {
-  id         Int      @id @default(autoincrement())
-  createdAt  DateTime @default(now()) @map("created_at")
-  updatedAt  DateTime @updatedAt @map("updated_at")
-  name       String
-  colorId    Int?     @map("color_id")
-  storeId    Int?     @map("store_id")
-  categoryId Int?     @map("category_id")
-
+  id          Int       @id @default(autoincrement())
+  createdAt   DateTime  @default(now()) @map("created_at")
+  updatedAt   DateTime  @updatedAt @map("updated_at")
+  name        String
+  colorId     Int?      @map("color_id")
+  storeId     Int?      @map("store_id")
+  categoryId  Int?      @map("category_id")
+  category    Category? @relation(fields: [categoryId], references: [id])
   color       Color?    @relation(fields: [colorId], references: [id])
   store       Store?    @relation(fields: [storeId], references: [id])
-  category    Category? @relation(fields: [categoryId], references: [id])
   favoritedBy User[]    @relation("UserFavorites")
 
   @@map("products")
 }
 
 model Order {
-  id        Int         @id @default(autoincrement())
-  createdAt DateTime    @default(now()) @map("created_at")
-  updatedAt DateTime    @updatedAt @map("updated_at")
-  status    OrderStatus @default(PENDING)
-  userId    Int?        @map("user_id")
-  total     Int
-
-  user       User?       @relation(fields: [userId], references: [id])
+  id         Int         @id @default(autoincrement())
+  createdAt  DateTime    @default(now()) @map("created_at")
+  updatedAt  DateTime    @updatedAt @map("updated_at")
+  status     OrderStatus @default(PENDING)
+  userId     Int?        @map("user_id")
+  total      Int
   orderItems OrderItem[]
+  user       User?       @relation(fields: [userId], references: [id])
 
   @@map("orders")
 }
 
 model OrderItem {
-  id      Int @id @default(autoincrement())
-  userId  Int @map("user_id")
-  storeId Int @map("store_id")
-  orderId Int @map("order_id")
-
-  user  User  @relation(fields: [userId], references: [id])
-  store Store @relation(fields: [storeId], references: [id])
-  order Order @relation(fields: [orderId], references: [id], onDelete: Cascade)
+  id      Int   @id @default(autoincrement())
+  userId  Int   @map("user_id")
+  storeId Int   @map("store_id")
+  orderId Int   @map("order_id")
+  order   Order @relation(fields: [orderId], references: [id], onDelete: Cascade)
+  store   Store @relation(fields: [storeId], references: [id])
+  user    User  @relation(fields: [userId], references: [id])
 
   @@map("order_items")
 }
 
 model Review {
-  id      Int @id @default(autoincrement())
-  userId  Int @map("user_id")
-  storeId Int @map("store_id")
-
-  user  User  @relation(fields: [userId], references: [id])
-  store Store @relation(fields: [storeId], references: [id])
+  id      Int   @id @default(autoincrement())
+  userId  Int   @map("user_id")
+  storeId Int   @map("store_id")
+  store   Store @relation(fields: [storeId], references: [id])
+  user    User  @relation(fields: [userId], references: [id])
 
   @@map("reviews")
+}
+
+enum OrderStatus {
+  PENDING
+  PAYED
 }

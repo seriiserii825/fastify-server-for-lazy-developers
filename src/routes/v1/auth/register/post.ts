@@ -34,6 +34,14 @@ const route: FastifyPluginCallbackTypebox = (app, _, done) => {
           email,
           password: hashedPassword,
         },
+        select: {
+          id: true,
+          email: true,
+          name: true,
+          picture: true,
+          createdAt: true,
+          updatedAt: true,
+        },
       });
 
       reply.status(201);
