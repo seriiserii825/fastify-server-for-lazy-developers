@@ -77,7 +77,7 @@ model Color {
   store     Store?    @relation(fields: [storeId], references: [id])
   products  Product[]
 
-  @@unique([name, storeId])
+  @@unique([name, storeId, value])
   @@map("colors")
 }
 
