@@ -16,3 +16,5 @@ export const CreateStore = Type.Composite([
 ]);
 
 export const UpdateStore = Type.Partial(CreateStore);
+
+export const StoreArray = Type.Array(Store);

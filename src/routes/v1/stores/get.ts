@@ -1,5 +1,5 @@
 import { FastifyPluginCallbackTypebox } from "@fastify/type-provider-typebox";
-import { UserSchemas } from "../../../schemas/index.ts";
+import { StoreSchemas } from "../../../schemas/index.ts";
 
 const route: FastifyPluginCallbackTypebox = (app, _, done) => {
   app.get(
@@ -8,16 +8,24 @@ const route: FastifyPluginCallbackTypebox = (app, _, done) => {
       onRequest: [app.authenticate],
       schema: {
         response: {
-          200: UserSchemas.Bodies.UsersList,
+          200: StoreSchemas.Bodies.StoreArray,
         },
       },
     },
-    async () => {
-      const users = await app.prisma.user.findMany();
-      return users.map((user) => ({
-        ...user,
-        createdAt: user.createdAt.toISOString(),
-        updatedAt: user.updatedAt.toISOString(),
+    async (request) => {
+      const userId = request.user.id;
+      const stores = await app.prisma.store.findMany({
+        where: {
+          userId,
+        },
+        orderBy: {
+          createdAt: "desc", // ✅ Сортировка: новые первыми
+        },
+      });
+      return stores.map((store) => ({
+        ...store,
+        createdAt: store.createdAt.toISOString(),
+        updatedAt: store.updatedAt.toISOString(),
       }));
     }
   );
